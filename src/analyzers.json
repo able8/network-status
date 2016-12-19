@@ -1,0 +1,46 @@
+{
+  "analyzers": [
+    {
+      "name": "dns",
+      "cmd": "nmcli device show wlan0",
+      "cmdinfo":"Current DNS and Gateway"
+    },
+    {
+      "name": "dhcp",
+      "cmd": "grep dhcp-server-identifier /var/lib/**/*.leases",
+      "cmdinfo":"Current dhcp server"
+    },
+    {
+      "name": "ToBing",
+      "cmd": "mtr --report --report-cycles 20 www.bing.com",
+      "cmdinfo":"Packet loss to Bing"
+    },
+    {
+      "name": "ToShanbay",
+      "cmd": "mtr --report --report-cycles 20 www.shanbay.com",
+      "cmdinfo":"Packet loss to Shanbay"
+    },
+    {
+      "name": "ToGithub",
+      "cmd": "mtr --report --report-cycles 20 www.github.com",
+      "cmdinfo":"Packet loss to Github"
+    },
+    {
+      "name": "ToGoogle",
+      "cmd": "mtr --report --report-cycles 20 www.google.com",
+      "cmdinfo":"Packet loss to Google"
+    },
+    {
+      "name": "ToDocker",
+      "cmd": "mtr --report --report-cycles 20 hub.docker.com",
+      "cmdinfo":"Packet loss to docker hub"
+    },
+    {
+      "name": "ToYoutube",
+      "cmd": "mtr --report --report-cycles 20 www.youtube.com",
+      "cmdinfo":"Packet loss to Youtube"
+    }
+
+  ],
+  "logdir": "LOG"
+}
