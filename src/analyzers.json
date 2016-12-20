@@ -11,36 +11,45 @@
       "cmdinfo":"Current dhcp server"
     },
     {
-      "name": "ToBing",
-      "cmd": "mtr --report --report-cycles 20 www.bing.com",
-      "cmdinfo":"Packet loss to Bing"
+      "name": "ISP",
+      "type": "BandwidthAnalyzer",
+      "server": "6435"
     },
     {
-      "name": "ToShanbay",
-      "cmd": "mtr --report --report-cycles 20 www.shanbay.com",
-      "cmdinfo":"Packet loss to Shanbay"
+      "name": "at2wn",
+      "type": "BandwidthAnalyzer",
+      "server": "6508"
     },
     {
-      "name": "ToGithub",
-      "cmd": "mtr --report --report-cycles 20 www.github.com",
-      "cmdinfo":"Packet loss to Github"
+      "name": "Bing",
+      "type": "LossAnalyzer",
+      "url": "www.bing.com"
     },
     {
-      "name": "ToGoogle",
-      "cmd": "mtr --report --report-cycles 20 www.google.com",
-      "cmdinfo":"Packet loss to Google"
+      "name": "Shanbay",
+      "type": "LossAnalyzer",
+      "url": "www.shanbay.com"
     },
     {
-      "name": "ToDocker",
-      "cmd": "mtr --report --report-cycles 20 hub.docker.com",
-      "cmdinfo":"Packet loss to docker hub"
+      "name": "Github",
+      "type": "LossAnalyzer",
+      "url": "www.github.com"
     },
     {
-      "name": "ToYoutube",
-      "cmd": "mtr --report --report-cycles 20 www.youtube.com",
-      "cmdinfo":"Packet loss to Youtube"
+      "name": "Google",
+      "type": "LossAnalyzer",
+      "url": "www.google.com"
+    },  
+    {
+      "name": "Docker",
+      "type": "LossAnalyzer",
+      "url": "www.docker.com"
+    },
+    {
+      "name": "Youtube",
+      "type": "LossAnalyzer",      
+      "url": "www.youtube.com"
     }
-
   ],
   "logdir": "LOG"
 }

@@ -12,12 +12,15 @@ class Analyzer:
         """
         Analyzer instance consists of a dict with keys:
         * name      analyzer name
+        * type      analyzer type
         * cmd       command
         * cmdinfo   brief description of cmd
         * logdir    log directory
         * logfile   log file name
         """
         self.__dict__.update( _dict)
+        if hasattr(self, 'type'):
+            eval(self.type)(self)
         self.logfile = self.name + ".log"
         self.logdir = "./"
 
@@ -32,6 +35,25 @@ class Analyzer:
         f = open(os.path.join(self.logdir, self.logfile), "w")
         return check_call(self.cmd, stdout=f, shell=True)
 
+class LossAnalyzer(Analyzer):
+    """
+    LossAnalyzer is a sub class of Analyzer, execute Linux/Unix command to test network packet loss.
+    """
+    def __init__(self, analyzer):
+        self = analyzer
+        self.cmd = "mtr --report --report-cycles 20 " + self.url
+        self.cmdinfo = "Packet loss to " + self.name
+        self.name = "To" + self.name
+
+class BandwidthAnalyzer(Analyzer):
+    """
+    BandwidthAnalyzer is a sub class of Analyzer, execute Linux/Unix command to test network download and upload bandwidth.
+    """
+    def __init__(self, analyzer):
+        self = analyzer
+        self.cmd = "speedtest.py --server " + self.server + " | grep -E 'Hosted|load:'"
+        self.cmdinfo = self.name + " download and upload bandwidth"
+        self.name = self.name + "Bandwidth"
 
 class Monitor:
     """
