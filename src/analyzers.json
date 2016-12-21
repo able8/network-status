@@ -22,11 +22,6 @@
       "server": "6508"
     },
     {
-      "name": "Bing",
-      "type": "SiteAnalyzer",
-      "url": "www.bing.com"
-    },
-    {
       "name": "Shanbay",
       "type": "SiteAnalyzer",
       "url": "www.shanbay.com"
@@ -50,6 +45,66 @@
       "name": "Youtube",
       "type": "SiteAnalyzer",      
       "url": "www.youtube.com"
+    },
+    {
+      "name": "Behance",
+      "type": "SiteAnalyzer",      
+      "url": "www.behance.net"
+    },
+    {
+      "name": "Dribbble",
+      "type": "SiteAnalyzer",      
+      "url": "Dribbble.com"
+    },
+    {
+      "name": "Stackoverflow",
+      "type": "SiteAnalyzer",      
+      "url": "stackoverflow.com"
+    },
+    {
+      "name": "Sourceforge",
+      "type": "SiteAnalyzer",      
+      "url": "sourceforge.net"
+    },
+    {
+      "name": "Bitbucket",
+      "type": "SiteAnalyzer",      
+      "url": "bitbucket.org"
+    },
+    {
+      "name": "Trello",
+      "type": "SiteAnalyzer",      
+      "url": "trello.com"
+    },
+    {
+      "name": "Edx",
+      "type": "SiteAnalyzer",      
+      "url": "www.edx.org"
+    },
+    {
+      "name": "Coursera",
+      "type": "SiteAnalyzer",      
+      "url": "www.coursera.org"
+    },
+    {
+      "name": "Udacity",
+      "type": "SiteAnalyzer",      
+      "url": "www.udacity.com"
+    },
+    {
+      "name": "Icons8",
+      "type": "SiteAnalyzer",      
+      "url": "icons8.com"
+    },
+    {
+      "name": "Zeplin",
+      "type": "SiteAnalyzer",      
+      "url": "zeplin.io"
+    },
+    {
+      "name": "Facebook",
+      "type": "SiteAnalyzer",      
+      "url": "www.Facebook.com"
     }
   ]
 }
