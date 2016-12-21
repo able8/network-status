@@ -3,23 +3,13 @@
   "analyzers": [
     {
       "name": "dns",
-      "cmd": "nmcli device show wlan0",
+      "cmd": "nmcli device show wlp3s0",
       "cmdinfo":"Current DNS and Gateway"
     },
     {
       "name": "dhcp",
-      "cmd": "grep dhcp-server-identifier /var/lib/**/*.leases",
+      "cmd": "sudo dhclient && grep dhcp-server-identifier /var/lib/**/*.leases",
       "cmdinfo":"Current dhcp server"
-    },
-    {
-      "name": "ISP",
-      "type": "BandwidthAnalyzer",
-      "server": "6435"
-    },
-    {
-      "name": "at2wn",
-      "type": "BandwidthAnalyzer",
-      "server": "6508"
     },
     {
       "name": "Shanbay",
@@ -105,6 +95,31 @@
       "name": "Facebook",
       "type": "SiteAnalyzer",      
       "url": "www.Facebook.com"
+    },
+    {
+      "name": "ISP001",
+      "type": "SpeedAnalyzer",
+      "url": "http://101.95.50.19/test.img"
+    },
+    {
+      "name": "tokyo001",
+      "type": "BandwidthAnalyzer",
+      "server": "7510"
+    },
+    {
+      "name": "ISP002",
+      "type": "SpeedAnalyzer",
+      "server": "http://101.95.50.19/test.img"
+    },
+    {
+      "name": "tokyo002",
+      "type": "BandwidthAnalyzer",
+      "server": "7510"
+    },
+    {
+      "name": "tokyo003",
+      "type": "BandwidthAnalyzer",
+      "server": "7510"
     }
   ]
 }

@@ -54,7 +54,7 @@ class SpeedAnalyzer(Analyzer):
     def __init__(self, _dict):
         super(SpeedAnalyzer, self).__init__(_dict)
         __format = "\"remote: %{remote_ip}:%{remote_port}\nsize_download: %{size_download} B\nspeed_download: %{speed_download} B/s\ntime_total: %{time_total}s\ntime_namelookup: %{time_namelookup}s\ntime_pretransfer: %{time_pretransfer}s\ntime_redirect: %{time_redirect}s\ntime_start_transfer_first_byte: %{time_starttransfer}s\n\""
-        self.cmd = "curl -s -w "+ __format + " " + self.url + " -o /dev/null"
+        self.cmd = "curl -s -m 10 -w "+ __format + " " + self.url + " -o /dev/null"
         self.cmdinfo = "Network speed to " + self.name
         self.name = "SpeedTo" + self.name
         self.logfile = self.name + ".log"
@@ -68,7 +68,7 @@ class BandwidthAnalyzer(Analyzer):
     """
     def __init__(self, _dict):
         super(BandwidthAnalyzer, self).__init__(_dict)
-        self.cmd = "speedtest.py --server " + self.server + " | grep -E 'Hosted|load:'"
+        self.cmd = "speedtest.py --server " + self.server + " | grep -E \"Hosted|load:\""
         self.cmdinfo = self.name + " download and upload bandwidth"
         self.name = self.name + "Bandwidth"
         self.logfile = self.name + ".log"
@@ -121,15 +121,14 @@ class Processor:
 
         self.monitor = Monitor(data["logdir"])
         for zerconf in data["analyzers"]:
-            for key in zerconf:
-                if key == "type":
-                    if zerconf[key] == "SiteAnalyzer":
-                        self.monitor.appendAnalyzer(SpeedAnalyzer(zerconf))
-                        self.monitor.appendAnalyzer(PacketLossAnalyzer(zerconf))
-                    elif zerconf[key] == "BandwidthAnalyzer":
-                        self.monitor.appendAnalyzer(BandwidthAnalyzer(zerconf))
-                    else:
-                        self.monitor.appendAnalyzer(Analyzer(zerconf))
+            if zerconf.has_key("type") == True:
+                if zerconf["type"] == "SiteAnalyzer":
+                    self.monitor.appendAnalyzer(SpeedAnalyzer(zerconf))
+                    self.monitor.appendAnalyzer(PacketLossAnalyzer(zerconf))
+                elif zerconf["type"] == "BandwidthAnalyzer":
+                    self.monitor.appendAnalyzer(BandwidthAnalyzer(zerconf))
+            else:
+                self.monitor.appendAnalyzer(Analyzer(zerconf))
 
     def run(self):
         self.monitor.run()
