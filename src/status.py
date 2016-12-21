@@ -2,7 +2,7 @@ from subprocess import check_call
 import os
 import json
 
-class Analyzer:
+class Analyzer(object):
     """
     Analyzer is a base class to execute Linux/Unix command which 
     retrieve the network attributes.
@@ -19,8 +19,6 @@ class Analyzer:
         * logfile   log file name
         """
         self.__dict__.update( _dict)
-        if hasattr(self, 'type'):
-            eval(self.type)(self)
         self.logfile = self.name + ".log"
         self.logdir = "./"
 
@@ -35,25 +33,48 @@ class Analyzer:
         f = open(os.path.join(self.logdir, self.logfile), "w")
         return check_call(self.cmd, stdout=f, shell=True)
 
-class LossAnalyzer(Analyzer):
+class PacketLossAnalyzer(Analyzer):
     """
-    LossAnalyzer is a sub class of Analyzer, execute Linux/Unix command to test network packet loss.
+    PacketLossAnalyzer is a sub class of Analyzer, execute Linux/Unix command to test network packet loss to a URL.
     """
-    def __init__(self, analyzer):
-        self = analyzer
-        self.cmd = "mtr --report --report-cycles 20 " + self.url
+    def __init__(self, _dict):
+        super(PacketLossAnalyzer, self).__init__(_dict)
+        self.cmd = "mtr --report --report-cycles 10 " + self.url
         self.cmdinfo = "Packet loss to " + self.name
-        self.name = "To" + self.name
+        self.name = "PacketLossTo" + self.name
+        self.logfile = self.name + ".log"
+
+    def start(self):
+        super(PacketLossAnalyzer, self).start()
+
+class SpeedAnalyzer(Analyzer):
+    """
+    SpeedAnalyzer is a sub class of Analyzer, execute Linux/Unix command to test network speed to a URL.
+    """
+    def __init__(self, _dict):
+        super(SpeedAnalyzer, self).__init__(_dict)
+        __format = "\"remote: %{remote_ip}:%{remote_port}\nsize_download: %{size_download} B\nspeed_download: %{speed_download} B/s\ntime_total: %{time_total}s\ntime_namelookup: %{time_namelookup}s\ntime_pretransfer: %{time_pretransfer}s\ntime_redirect: %{time_redirect}s\ntime_start_transfer_first_byte: %{time_starttransfer}s\n\""
+        self.cmd = "curl -s -w "+ __format + " " + self.url + " -o /dev/null"
+        self.cmdinfo = "Network speed to " + self.name
+        self.name = "SpeedTo" + self.name
+        self.logfile = self.name + ".log"
+    
+    def start(self):
+        super(SpeedAnalyzer, self).start()
 
 class BandwidthAnalyzer(Analyzer):
     """
     BandwidthAnalyzer is a sub class of Analyzer, execute Linux/Unix command to test network download and upload bandwidth.
     """
-    def __init__(self, analyzer):
-        self = analyzer
+    def __init__(self, _dict):
+        super(BandwidthAnalyzer, self).__init__(_dict)
         self.cmd = "speedtest.py --server " + self.server + " | grep -E 'Hosted|load:'"
         self.cmdinfo = self.name + " download and upload bandwidth"
         self.name = self.name + "Bandwidth"
+        self.logfile = self.name + ".log"
+    
+    def start(self):
+        super(BandwidthAnalyzer, self).start()
 
 class Monitor:
     """
@@ -100,8 +121,15 @@ class Processor:
 
         self.monitor = Monitor(data["logdir"])
         for zerconf in data["analyzers"]:
-            self.monitor.appendAnalyzer(Analyzer(zerconf))
-
+            for key in zerconf:
+                if key == "type":
+                    if zerconf[key] == "SiteAnalyzer":
+                        self.monitor.appendAnalyzer(SpeedAnalyzer(zerconf))
+                        self.monitor.appendAnalyzer(PacketLossAnalyzer(zerconf))
+                    elif zerconf[key] == "BandwidthAnalyzer":
+                        self.monitor.appendAnalyzer(BandwidthAnalyzer(zerconf))
+                    else:
+                        self.monitor.appendAnalyzer(Analyzer(zerconf))
 
     def run(self):
         self.monitor.run()

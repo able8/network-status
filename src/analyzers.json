@@ -1,4 +1,5 @@
 {
+  "logdir": "LOG",
   "analyzers": [
     {
       "name": "dns",
@@ -22,34 +23,33 @@
     },
     {
       "name": "Bing",
-      "type": "LossAnalyzer",
+      "type": "SiteAnalyzer",
       "url": "www.bing.com"
     },
     {
       "name": "Shanbay",
-      "type": "LossAnalyzer",
+      "type": "SiteAnalyzer",
       "url": "www.shanbay.com"
     },
     {
       "name": "Github",
-      "type": "LossAnalyzer",
+      "type": "SiteAnalyzer",
       "url": "www.github.com"
     },
     {
       "name": "Google",
-      "type": "LossAnalyzer",
+      "type": "SiteAnalyzer",
       "url": "www.google.com"
     },  
     {
       "name": "Docker",
-      "type": "LossAnalyzer",
+      "type": "SiteAnalyzer",
       "url": "www.docker.com"
     },
     {
       "name": "Youtube",
-      "type": "LossAnalyzer",      
+      "type": "SiteAnalyzer",      
       "url": "www.youtube.com"
     }
-  ],
-  "logdir": "LOG"
+  ]
 }
