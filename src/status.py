@@ -31,8 +31,10 @@ class Analyzer(object):
         print "Testing " + self.cmdinfo
         print "="*40 
         f = open(os.path.join(self.logdir, self.logfile), "w")
-        return check_call(self.cmd, stdout=f, shell=True)
-
+        try:
+            check_call(self.cmd, stdout=f, shell=True)
+        except Exception as e:
+            print e
 class PacketLossAnalyzer(Analyzer):
     """
     PacketLossAnalyzer is a sub class of Analyzer, execute Linux/Unix command to test network packet loss to a URL.
@@ -72,6 +74,7 @@ class BandwidthAnalyzer(Analyzer):
         self.cmdinfo = self.name + " download and upload bandwidth"
         self.name = self.name + "Bandwidth"
         self.logfile = self.name + ".log"
+    
     
     def start(self):
         super(BandwidthAnalyzer, self).start()
